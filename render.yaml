@@ -2,22 +2,18 @@ services:
   - type: web
     name: nifty-predictor
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn src.app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: gunicorn src.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 8 --timeout 120
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.4
+        value: 3.11.8
       - key: PORT
         value: 10000
       - key: DEBUG
         value: false
       - key: CACHE_TIMEOUT
         value: 300
-      - key: TIMEOUT
-        value: 10
     healthCheckPath: /api/health
     autoDeploy: true
-    disk:
-      name: cache
-      mountPath: /tmp
-      sizeGB: 1
