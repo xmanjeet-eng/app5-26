@@ -7,3 +7,4 @@ numpy==1.24.3
 python-dotenv==1.0.0
 gunicorn==21.2.0
 requests==2.31.0
+setuptools==68.0.0
