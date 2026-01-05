@@ -7,24 +7,25 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: #0f172a;
             color: white;
-            min-height: 100vh;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        .header {
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
             text-align: center;
-            padding: 30px;
+        }
+        .header {
             background: linear-gradient(135deg, #1e40af, #7c3aed);
+            padding: 30px;
             border-radius: 15px;
             margin-bottom: 20px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
             border-radius: 15px;
             margin: 20px 0;
-            text-align: center;
         }
         .bullish { border: 3px solid #10b981; }
         .bearish { border: 3px solid #ef4444; }
@@ -40,24 +41,11 @@
             margin: 10px;
         }
         .btn:hover { background: #2563eb; }
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
         .stat {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             padding: 15px;
             border-radius: 10px;
-            text-align: center;
-        }
-        .disclaimer {
-            background: rgba(239, 68, 68, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-size: 14px;
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -65,35 +53,31 @@
     <div class="container">
         <div class="header">
             <h1>📈 Nifty 50 Predictor</h1>
-            <p>Real-time Market Analysis</p>
+            <p>Live Market Analysis</p>
         </div>
         
-        <div style="text-align: center;">
-            <button class="btn" onclick="getPrediction()">Get Prediction</button>
-        </div>
+        <button class="btn" onclick="getPrediction()">Get Prediction</button>
         
         <div class="card neutral" id="predictionCard">
-            <h2 id="predictionText">Ready for Analysis</h2>
-            <div id="analysisText">Click button to start</div>
-            <div style="margin: 20px auto; width: 80%; background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px;">
+            <h2 id="predictionText">Ready</h2>
+            <p id="analysisText">Click button to analyze</p>
+            <div style="background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px; margin: 20px 0;">
                 <div id="confidenceBar" style="height: 100%; width: 0%; background: #10b981; border-radius: 5px; transition: width 0.5s;"></div>
             </div>
-            <div>Confidence: <span id="confidenceText">0%</span></div>
+            <p>Confidence: <span id="confidenceText">0%</span></p>
         </div>
         
-        <div class="stats">
-            <div class="stat">
-                <div style="font-size: 24px; font-weight: bold;" id="currentPrice">--</div>
-                <div style="color: #94a3b8;">Current Price</div>
-            </div>
-            <div class="stat">
-                <div style="font-size: 24px; font-weight: bold;" id="todayChange">--</div>
-                <div style="color: #94a3b8;">Today's Change</div>
-            </div>
+        <div class="stat">
+            <h3 id="currentPrice">--</h3>
+            <p>Current Price</p>
+        </div>
+        <div class="stat">
+            <h3 id="todayChange">--</h3>
+            <p>Today's Change</p>
         </div>
         
-        <div class="disclaimer">
-            <p>⚠️ <strong>Disclaimer:</strong> Educational tool only. Not financial advice.</p>
+        <div style="background: rgba(239,68,68,0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
+            <p><strong>⚠️ Disclaimer:</strong> Educational tool only. Not financial advice.</p>
         </div>
     </div>
     
@@ -116,15 +100,16 @@
                 
                 document.getElementById('currentPrice').textContent = data.current_price;
                 document.getElementById('todayChange').textContent = data.today_change;
-                document.getElementById('todayChange').style.color = data.today_change.includes('+') ? '#10b981' : '#ef4444';
+                document.getElementById('todayChange').style.color = 
+                    data.today_change.includes('+') ? '#10b981' : '#ef4444';
                 
             } catch (error) {
                 document.getElementById('predictionText').textContent = 'ERROR';
-                document.getElementById('analysisText').textContent = 'Failed to fetch data. Please try again.';
+                document.getElementById('analysisText').textContent = 'Failed to fetch data';
             }
         }
         
-        // Initial load
+        // Load on start
         getPrediction();
     </script>
 </body>
